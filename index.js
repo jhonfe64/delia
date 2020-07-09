@@ -364,12 +364,17 @@ app.get('/deliah/admin/users/:rol', [ensuringtoken, validate_superAdmin_and_admi
 //==> usuario con rol usuario trayendo su propia infromacion // no trae nada si se envia el id pero el rol no es user
 app.get('/deliah/user/info/:id', [ensuringtoken, validate_user_rol], (req, res) => {
     const id = req.params.id;
-    sequelize.query('SELECT * FROM users WHERE user_id = ? AND rol = ?', {
+    const user_nickname = jwt.verify(req.token, signature);
+    const nickname_from_user = user_nickname.nickname;
+
+    sequelize.query('SELECT * FROM users WHERE user_id = ? AND nickname = ?', {
         type: sequelize.QueryTypes.SELECT,
-        replacements: [id, 'user']
+        replacements: [id, nickname_from_user]
     }).then((rol_user_info) => {
-        if (rol_user_info) {
+        if (rol_user_info != "") {
             res.json(rol_user_info);
+        }else{
+            res.json("Impossible to get info from this user");
         }
     }).catch((err) => {
         res.json(err);
@@ -453,55 +458,69 @@ app.get('/deliah/admin/orders/:id', [ensuringtoken, validate_superAdmin_and_admi
     });
 });
 
-//==> usuario puede cambiar el status del pedido por cancelado
+
+//==> admin y super admin eliminando ordenes por id 
+app.delete('/deliah/admin/orders/deleteorder/:id', [ensuringtoken, validate_superAdmin_and_admin_by_token], (req, res)=>{
+    const id = req.params.id
+    sequelize.query('DELETE FROM orders WHERE id_order = ?', {
+        replacements: [id]
+    }).then((deleted_order)=>{
+        if(deleted_order){
+            res.status(200).json("this order has been deleted")
+        }
+    }).catch((err)=>{
+        if(err){
+            res.status(403).json("impossible to delete order");
+        }
+    })
+});
+
+//==> usuario cambiando el stado de su orden por cancelado
 app.put('/deliah/user/orderstatus/:id',[ensuringtoken, validate_user_rol], (req, res)=>{
-    const cancel_order = req.body;
+    const cancel_order = req.body.status;
     const order_id = req.params.id;
-    if(cancel_order.status === "cancelado"){
-        res.json("esta cancelada")
-        // sequelize.query('UPDATE orders SET status = ? WHERE id_order = ?', {
-        //     replacements: [cancel_order, order_id]
-        // })
-        // .then((canceled)=>{
-        //     if(canceled){
-        //         console.log(canceled);
-        //     }
-        // }).catch((err)=>{
-        //     if(err){
-        //         console.log(err);
-        //     }
-        // })
+    //obteniendo el id del usuario que inicio sesion y va a hacer la orden (viene en el token)
+    const user_id = jwt.verify(req.token, signature);
+    const id_from_user = user_id.user_id;
+    if(cancel_order === "cancelado"){
+        sequelize.query('UPDATE orders SET status = ? WHERE id_order = ? AND user_id = ?', {
+            replacements: [cancel_order, order_id, id_from_user]
+        }).then((canceled_order)=>{
+            if(canceled_order){
+                for(i of canceled_order){
+                    if(i.affectedRows == 0){
+                        res.status(403).json("impossible update order status, or this order has been already canceled");
+                    }else{
+                        res.status(200).json("this order has been canceled")
+                    }
+                }
+            }
+        }).catch((err)=>{
+            res.json(err);
+        });
     }else{
-        console.log("you just can cancel your order")
+        res.json("you only can cancel orders here by writing cancelado");
     }
-    
-})
+});
 
+//==> usuario obteniendo sus ordenes
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.get('/deliah/user/getorders', [ensuringtoken, validate_user_rol], (req, res)=>{
+    const id_from_user = jwt.verify(req.token, signature);
+    const user_id = id_from_user.user_id;
+    sequelize.query('SELECT orders.status, orders.hour, orders.id_order, products_per_order.quantity, products.product_name, products.price_per_unit, users.nickname, users.direction FROM users JOIN orders ON users.user_id = orders.user_id JOIN products_per_order ON products_per_order.id_order = orders.id_order JOIN products ON products.product_id = products_per_order.product_id WHERE users.user_id = ?', {
+        type: Sequelize.QueryTypes.SELECT,
+        replacements: [user_id]
+    }).then((all_user_orders)=>{
+        if(all_user_orders != ""){
+            res.status(200).json(all_user_orders)
+        }else{
+            res.json("this user doesn't have orders yet")
+        }
+    }).catch((err)=>{
+        res.json(err);
+    })
+});
 
 app.listen(port, () => {
     console.log("currently running on port 3000");
