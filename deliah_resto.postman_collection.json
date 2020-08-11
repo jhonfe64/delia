@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "55f5e94f-d828-49be-9aa0-cf93a0fa5cd7",
+		"name": "deliah_resto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "registrando nuevos usuarios",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nickname\": \"john123\",\r\n    \"name_last_name\": \"john fredy perez\",\r\n    \"email\": \"jhon@john.com\",\r\n    \"phone_number\": \"1234567\",\r\n    \"direction cra 7# 1-14\",\r\n    \"password\": \"skjhfkjhdkhfkdhfkhdf32232\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "registrando usuarios, desde form, el primero que se registra será superAdmin, el resto users normales"
+			},
+			"response": []
+		},
+		{
+			"name": "logeando usuarios",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nickname_email\":\"john@john.com\",\r\n    \"password\": \"john123\"\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/deliah/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"login"
+					]
+				},
+				"description": "cada usuario debe iniciar sesion, al iniciar sesion se genera un toque que se debe enviar en la cabecera de cada una de las rutas menos en login\r\n\r\n    ------------------------------\r\n    |    key      | value        |\r\n    ------------------------------\r\n    |Authorization|Bearer + token|\r\n    ------------------------------"
+			},
+			"response": []
+		},
+		{
+			"name": "super admin creando new admin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDMsIm5pY2tuYW1lIjoiam9objEyMyIsIm5hbWVfbGFzdF9uYW1lIjoiam9obiBwZXJleiIsImVtYWlsIjoiam9obkBqb2huLmNvbSIsInBob25lX251bWJlciI6MjE0NzQ4MzY0NywiZGlyZWN0aW9uIjoiY3JhIDEyMyAjIDM0LTUyIiwicGFzc3dvcmQiOiIkMmIkMTAkTXdRLm9EWkcyNUlWaTQzbWhjcWRSdU1zTDJtbkhhNHpLVWVMSTBJSmJhOE9UdjA2bnNlbG0iLCJyb2wiOiJzdXBlckFkbWluIiwiaWF0IjoxNTkzODI3MzYxfQ.3CSlsJKBHcsDv0dympf_RZ_GR8G-TSOA1Zb2v1XvvK8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nickname\": \"mariana123\",\r\n    \"name_last_name\":\"mariana rodriguez\",\r\n    \"email\": \"maria@maria.com\",\r\n    \"phone_number\":\"3002547852\",\r\n    \"direction\":\"cra 12 # 3-54\",\r\n    \"password\":\"mariana123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/deliah/superadmin/newadmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"superadmin",
+						"newadmin"
+					]
+				},
+				"description": "si rol = es igual a superAdmin cree un nuevo administrador\r\nesta es una ruta protegida, no olvidar enviar el token que se genera al hacer login\r\n\r\n    ------------------------------\r\n    |    key      | value        |\r\n    ------------------------------\r\n    |Authorization|Bearer + token|\r\n    ------------------------------"
+			},
+			"response": []
+		},
+		{
+			"name": "super admin borrando admin",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDQsIm5pY2tuYW1lIjoiam9zZTEyMyIsIm5hbWVfbGFzdF9uYW1lIjoiam9zZSBhbmRyZXMgcGVyZXoiLCJlbWFpbCI6Impvc2VAam9zZS5jb20iLCJwaG9uZV9udW1iZXIiOjIxNDc0ODM2NDcsImRpcmVjdGlvbiI6ImNyYSA2ICMgMy01NCIsInBhc3N3b3JkIjoiJDJiJDEwJDFELkdKUy9BaEZDcEo4WTZka3ZEdmUvbVB2RVpaYzRKOHh5NEp6YlZOYnRyaUhIR2lDRWUuIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE1OTM4MzQzMzl9.KKum999ecigW0eibCRBzexG_yNT1td0uq368guWl2GI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/deliah/superadmin/deleteadmin/105",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"superadmin",
+						"deleteadmin",
+						"105"
+					]
+				},
+				"description": "el super admin (enviara su id como parametro) y podrá borrar de la tabla users cualquiera de los administradores que creó, siempre y cuando el id y el el rol concuerde (el id se envia desde postman) "
+			},
+			"response": []
+		},
+		{
+			"name": "creando productos (super admin y admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMsIm5pY2tuYW1lIjoiZGF2aWQxMjMiLCJuYW1lX2xhc3RfbmFtZSI6ImRhdmlkIHJvZHJpZ3VleiIsImVtYWlsIjoiZGF2aWRAZGF2aWQuY29tIiwicGhvbmVfbnVtYmVyIjoyMTQ3NDgzNjQ3LCJkaXJlY3Rpb24iOiJjcmEgMTIzICMgMzQtNTIiLCJwYXNzd29yZCI6IiQyYiQxMCRnd3BCSlhaTUNlYjNaaWplTnVTaGpPT1VITEJnUzhFSkphc2U3N2pEUmVpZUtsdzE1UWxWSyIsInJvbCI6InVzZXIiLCJpYXQiOjE1OTM4MzYyNDh9.5UKPBps-Zg3rHWBvnPoz9qKdMxtW1p-8PKFci4V12Lo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product_name\": \"papitas fritas\",\r\n    \"price_per_unit\": \"2500\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/deliah/admin/addproduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"admin",
+						"addproduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "borrar productos (solo admin y super admin pueden borrar)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin y super admin editando producto (editar registro completo)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDQsIm5pY2tuYW1lIjoiam9zZTEyMyIsIm5hbWVfbGFzdF9uYW1lIjoiam9zZSBhbmRyZXMgcGVyZXoiLCJlbWFpbCI6Impvc2VAam9zZS5jb20iLCJwaG9uZV9udW1iZXIiOjIxNDc0ODM2NDcsImRpcmVjdGlvbiI6ImNyYSA2ICMgMy01NCIsInBhc3N3b3JkIjoiJDJiJDEwJDFELkdKUy9BaEZDcEo4WTZka3ZEdmUvbVB2RVpaYzRKOHh5NEp6YlZOYnRyaUhIR2lDRWUuIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE1OTM5MDgwODh9.fSksVVIXLaMKoyPG9K_1rufW0MFOuf5fo-kophXZa1M",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product_name\":\"PAPAS\",\r\n    \"price_per_unit\": \"4500\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/deliah/admin/editfullproduct/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"admin",
+						"editfullproduct",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "rol usuario obteniendo su informacion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin y superadmin trayendo usuarios por rol",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/deliah/user/info/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"user",
+						"info",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usuario creando una orden",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"product_id\": \"20\",\r\n            \"quantity\": \"10\"\r\n        },\r\n        {\r\n            \"product_id\": \"20\",\r\n            \"quantity\": \"10\"\r\n        }\r\n    ]\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/deliah/user/neworder/mariana123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"user",
+						"neworder",
+						"mariana123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin y super admin obteniendo todas las ordenes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/deliah/admin/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"admin",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin y superadmin cambiando status de una orde por id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDQsIm5pY2tuYW1lIjoiam9zZTEyMyIsIm5hbWVfbGFzdF9uYW1lIjoiam9zZSBhbmRyZXMgcGVyZXoiLCJlbWFpbCI6Impvc2VAam9zZS5jb20iLCJwaG9uZV9udW1iZXIiOjIxNDc0ODM2NDcsImRpcmVjdGlvbiI6ImNyYSA2ICMgMy01NCIsInBhc3N3b3JkIjoiJDJiJDEwJDFELkdKUy9BaEZDcEo4WTZka3ZEdmUvbVB2RVpaYzRKOHh5NEp6YlZOYnRyaUhIR2lDRWUuIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE1OTQxNzQ3NDJ9.vCFKY5-h2Zcs2N1ZByZN8DDuk1x8k5BQWhvn_1m-GHo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"confirmado\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/deliah/admin/orders/306",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"admin",
+						"orders",
+						"306"
+					]
+				},
+				"description": "las ordenes por defecto, tienen estatus preparando"
+			},
+			"response": []
+		},
+		{
+			"name": "admin super admin obtienen una orden por id ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usuario cancelando su orden por id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMsIm5pY2tuYW1lIjoiZGF2aWQxMjMiLCJuYW1lX2xhc3RfbmFtZSI6ImRhdmlkIHJvZHJpZ3VleiIsImVtYWlsIjoiZGF2aWRAZGF2aWQuY29tIiwicGhvbmVfbnVtYmVyIjoyMTQ3NDgzNjQ3LCJkaXJlY3Rpb24iOiJjcmEgMTIzICMgMzQtNTIiLCJwYXNzd29yZCI6IiQyYiQxMCRnd3BCSlhaTUNlYjNaaWplTnVTaGpPT1VITEJnUzhFSkphc2U3N2pEUmVpZUtsdzE1UWxWSyIsInJvbCI6InVzZXIiLCJpYXQiOjE1OTQxODE4MzJ9.9DuG1yyxjYLZlxasjuAgjirT6HMmAYm7XHCexksmxVs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"cancelado\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000//deliah/user/orderstatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"",
+						"deliah",
+						"user",
+						"orderstatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin super admin eliminando ordenes por id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTYsIm5pY2tuYW1lIjoibWFyaWExMjMiLCJuYW1lX2xhc3RfbmFtZSI6Im1hcmlhIG9zb3JpbyIsImVtYWlsIjoibWFyaWFAbWFyaWEuY29tIiwicGhvbmVfbnVtYmVyIjoyMTQ3NDgzNjQ3LCJkaXJlY3Rpb24iOiJhdmVuaWlkYSBzaWVtcHJldml2YSAxMjMiLCJwYXNzd29yZCI6IiQyYiQxMCR2N3FEMkw4eGlLOXpPMmhLWUJFYnMuNG05ZXN5MVVjWWVIUVJYZktQY3c3bjlFT3VQcC82QyIsInJvbCI6InVzZXIiLCJpYXQiOjE1OTQyNTY2MDJ9.pEAmqKmqTdiYJYg0O1uRW3dnow-Xw1MR7X2897-ff64",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/deliah/admin/orders/deleteorder/310",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"deliah",
+						"admin",
+						"orders",
+						"deleteorder",
+						"310"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user obteniendo sus ordenes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "protected",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/protected",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"protected"
+					]
+				},
+				"description": "prueba"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

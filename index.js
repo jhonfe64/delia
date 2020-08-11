@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 const signature = 'my_secret_key';
 app.use(bodyParser.json());
 
-//==> validando que los espacios de refistro de usuarios no esten vacios
+//==> validando que los espacios de registro de usuarios no esten vacios
 function validateSignupFields(req, res, next) {
     const { nickname, name_last_name, email, phone_number, direction, password } = req.body;
     if (!nickname || !name_last_name || !email || !phone_number || !direction || !password) {
@@ -27,7 +27,6 @@ function validate_super_admin(req, res, next) {
     }).then((user) => {
         if (user.length == 0) {
             const { nickname, name_last_name, email, phone_number, direction, password } = req.body;
-            //encrypting password by using bcrypt
             const encrypted_password = bcrypt.hashSync(password, 10);
             sequelize.query('INSERT INTO users VALUES (NULL,?,?,?,?,?,?,?)', {
                 replacements: [nickname, name_last_name, email, phone_number, direction, encrypted_password, 'superAdmin']
@@ -91,23 +90,12 @@ function validateUserAndPassword(req, res, next) {
 }
 
 //===> asegurandose que el token exista 
-//==> El toquen se debe crear previamente en el login, es decir una vez el usuario y la contraseña sean correctos, se crea un token
-//para ese usuario
-
 function ensuringtoken(req, res, next) {
-    //en la ruta login creamos el token
-    //la constante bererHeader en el req recibe las cabeceras(ahi va el token) desde el postman + el metodo autorization
     const beredHeader = req.headers.authorization;
-    //si existe beredHeader osea si se envió desde postman la cabecera
     if (beredHeader) {
-        //la cabera suele venir asi BEARER dñsñfd2fd1f31df31fd(el token) como cadena de texto,
-        //le decimos que cree un array donde haya " "
         const bearer = beredHeader.split(" ");
-        //queremos la posicion 1 de ese array osea el token
         const bearerToken = bearer[1];
         req.token = bearerToken;
-        //el token que he creado se lo adjunto a la peticion con req en una propiedad que yo creo llamada token
-        //con esto lo puedo llamar en cualquier ruta (este toquen lleva toda la info del usuario);
         next();
     } else {
         res.status(403).json("invalid token");
@@ -124,7 +112,7 @@ function validate_superAdmin_by_token(req, res, next) {
     }
 }
 
-//vamos a validar que el token que se creo en la ruta login, y que se envio desde el middleware ensuringToken tenga en la propiedad rol el valor superAdmin o el valor de admin
+//validar que el token que se creo en la ruta login, y que se envio desde el middleware ensuringToken tenga en la propiedad rol el valor superAdmin o el valor de admin
 function validate_superAdmin_and_admin_by_token(req, res, next) {
     const decoded = jwt.verify(req.token, signature);
     if (decoded.rol === "superAdmin" || decoded.rol === "admin") {
@@ -134,7 +122,7 @@ function validate_superAdmin_and_admin_by_token(req, res, next) {
     }
 }
 
-//vamos a validar que el producto que se esta insertando no esté previamente guardado en la tabla products
+//validar que el producto que se esta insertando no esté previamente guardado en la tabla products
 function validate_existing_product(req, res, next) {
     const { product_name } = req.body;
     let verify_product_name = false;
@@ -179,34 +167,7 @@ function validate_user_rol(req, res, next) {
 END POINTS 
 =======================================================================================================*/
 
-app.get('/protected', ensuringtoken, (req, res) => {
-    //ahora esta ruta esta protegida, se debe enviar la cabecera desde el postman para poder acceder a esta ruta 
-    //en el postman click en cabeceras, y enviamos la info así
-
-
-    /*
-
-    ------------------------------------------------------------------
-    |        key            |                value                    |
-    ------------------------------------------------------------------
-    |     Authorization     |  Bearer +token_generado_en_el_login     |
-    ------------------------------------------------------------------
-
-    ------------------------------
-    |    key      | value        |
-    ------------------------------
-    |Authorization|Bearer + token|
-    ------------------------------
-    
-    */
-
-    //res.json("ruta protegida");
-    const decoded = jwt.verify(req.token, signature);
-    res.json(decoded);
-});
-
 //===> SIGN UP  Registrar nuevo usuario
-
 app.post('/deliah/signup', [validateSignupFields, validate_super_admin, validate_taken_user], (req, res) => {
     const { nickname, name_last_name, email, phone_number, direction, password } = req.body;
     //encrypting password by bcrypt 
@@ -214,12 +175,12 @@ app.post('/deliah/signup', [validateSignupFields, validate_super_admin, validate
     sequelize.query('INSERT INTO users VALUES (NULL,?,?,?,?,?,?,?)', {
         replacements: [nickname, name_last_name, email, phone_number, direction, encrypted_password, 'user']
     }).then(new_user => {
-        if (new_user) {
+        if (new_user){
             res.status(200).json("new user has been created successfully");
         }
     }).catch((err) => {
         if (err) {
-            res.status(403).json("impossible to create new user");
+            res.status(400).json("impossible to create new user");
         }
     });
 });
@@ -249,8 +210,6 @@ app.post('/deliah/login', [validateUserAndPassword], (req, res) => {
 
 
 //==>super admin creando mas admins
-//1. validamos que exista el token, validamos que el usuario sea admin
-
 app.post('/deliah/superadmin/newadmin', [ensuringtoken, validate_superAdmin_by_token, validateSignupFields, validate_taken_user], (req, res) => {
     const { nickname, name_last_name, email, phone_number, direction, password } = req.body;
     const encrypted_password = bcrypt.hashSync(password, 10);
@@ -285,7 +244,6 @@ app.delete('/deliah/superadmin/deleteadmin/:id', [ensuringtoken, validate_superA
 
 
 //==> admin y super admin agregando productos 
-
 app.post('/deliah/admin/addproduct', [ensuringtoken, validate_superAdmin_and_admin_by_token, validate_newProducts_fields, validate_existing_product], (req, res) => {
     const { product_name, price_per_unit } = req.body;
     sequelize.query('INSERT INTO products (product_name, price_per_unit) VALUES (?,?)', {
@@ -302,7 +260,6 @@ app.post('/deliah/admin/addproduct', [ensuringtoken, validate_superAdmin_and_adm
 });
 
 //==> admin y super admin eliminando productos 
-
 app.delete('/deliah/admin/deleteproduct/:id', [ensuringtoken, validate_superAdmin_and_admin_by_token], (req, res) => {
     const id = req.params.id;
     sequelize.query('DELETE FROM products WHERE product_id = ?', {
@@ -337,7 +294,6 @@ app.put('/deliah/admin/editfullproduct/:id', [ensuringtoken, validate_superAdmin
 //==> admin y super admin trayendo todos los usuarios por roll
 app.get('/deliah/admin/users/:rol', [ensuringtoken, validate_superAdmin_and_admin_by_token], (req, res) => {
     const rol = req.params.rol;
-
     //trayendo todos los usuarios independientemente del rol
     if (rol == "allusers") {
         sequelize.query('SELECT * FROM users', {
@@ -382,12 +338,9 @@ app.get('/deliah/user/info/:id', [ensuringtoken, validate_user_rol], (req, res) 
 });
 
 
-
 //====> Usuarios pidiendo ordenes 
 app.post('/deliah/user/neworder', ensuringtoken, (req, res) => {
-    //este es el pedido del usuario
     const { products } = req.body;
-    //obteniendo el id del usuario que inicio sesion y va a hacer la orden
     const user_id = jwt.verify(req.token, signature);
     const id_from_user = user_id.user_id;
 
@@ -425,9 +378,9 @@ app.get('/deliah/admin/orders', [ensuringtoken, validate_superAdmin_and_admin_by
     sequelize.query('SELECT orders.status, orders.hour, orders.id_order, products_per_order.quantity, products.product_name, products.price_per_unit, users.nickname, users.direction FROM users JOIN orders ON users.user_id = orders.user_id JOIN products_per_order ON products_per_order.id_order = orders.id_order JOIN products ON products.product_id = products_per_order.product_id', {
         type: Sequelize.QueryTypes.SELECT
     }).then((all_orders)=>{
-        res.json(all_orders);
+        res.status(200).json(all_orders);
     }).catch((err)=>{
-        res.json(err);
+        res.status(400).json(err);
     });
 });
 
@@ -503,8 +456,8 @@ app.put('/deliah/user/orderstatus/:id',[ensuringtoken, validate_user_rol], (req,
     }
 });
 
-//==> usuario obteniendo sus ordenes
 
+//==> usuario obteniendo sus ordenes
 app.get('/deliah/user/getorders', [ensuringtoken, validate_user_rol], (req, res)=>{
     const id_from_user = jwt.verify(req.token, signature);
     const user_id = id_from_user.user_id;
@@ -524,4 +477,8 @@ app.get('/deliah/user/getorders', [ensuringtoken, validate_user_rol], (req, res)
 
 app.listen(port, () => {
     console.log("currently running on port 3000");
-})
+});
+
+
+
+

@@ -1,0 +1,723 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: 'delia-resto'
+  description: 'An api for delivery food '
+  contact: 
+    name: Jhonn
+    email: jhon@jhon.com
+# Added by API Auto Mocking Plugin
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/john57/delia-resto2/1.0
+  - description: Local server
+    url: https://localhost:3000
+paths:
+  #Sending new users to the data base by POST
+  /deliah/signUp:
+    post:
+      description: signing up new users
+      requestBody:
+        required: true
+        content: 
+          aplication/json: 
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  example: 1
+                nickname: 
+                  type: string
+                  example: john123
+                name_last_name:
+                  type: string
+                  example: john pérez
+                email: 
+                  type: string
+                  example: john@john.com
+                phone_number:
+                  type: integer
+                  example: 123456789
+                direction:
+                  type: string
+                  example: cra64354
+                password:
+                  type: string
+                  example: jdjdhdhdyeyehehedtd
+                rol: 
+                  type: string
+                  example: user
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"message": "new user has been created successfully"}
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"err": "impossible to create new user"}   
+                
+                
+  #log in usesrs
+  /deliah/login:
+    post:
+      description: signing up new users
+      requestBody:
+        required: true
+        content: 
+          aplication/json: 
+            schema:
+              type: object
+              properties:
+                nickname_email:
+                  type: string
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"message": "token has been created"}
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"err": "impossible to create token for this user"} 
+                
+                
+  #super admin creating new admin
+  /deliah/superadmin/newadmin:
+     post:
+      description: super admin creating new admin
+      requestBody:
+        required: true
+        content: 
+          aplication/json: 
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                nickname: 
+                  type: string
+                name_last_name:
+                  type: string
+                email: 
+                  type: string
+                phone_number:
+                  type: integer
+                direction:
+                  type: string
+                password:
+                  type: string
+                rol: 
+                  type: string
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"message": "added new admin"}
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"err": "impossible to add new admin"}  
+                
+                
+                
+  #super admin deleting admin by id
+  /deliah/superadmin/deleteadmin/{id}:
+    delete:
+      description: this request allows super admin delete admins by id
+      parameters: 
+        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
+      - in: path
+        # nombre del parametro 
+        name: id
+        required: true
+        description: user id
+        #tipo de dato que va a retornar la consulta
+        schema:
+          type: number
+          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
+          example: 1
+        
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: object
+                #especificamos la info del array
+                example: {"message": "admmin successfully deleted"}
+                
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"errr": "impossible to delete this admin"}
+                
+                
+  
+  #admin and superAmin adding products
+  /deliah/admin/addproduct:
+     post:
+      description: admin and superAdmin adding products
+      requestBody:
+        required: true
+        content: 
+          aplication/json: 
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                product_name: 
+                  type: string
+                price_per_unit:
+                  type: integer
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"message": "new products successfully created"}
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"err": "impossible to create new product"}  
+                
+                
+  #admin and superAdmin deleting products
+  /deliah/admin/deleteproduct/{id}:
+    delete:
+      description: this request allows admins and super admin delete products by id
+      parameters: 
+        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
+      - in: path
+        # nombre del parametro 
+        name: id
+        required: true
+        description: user id
+        #tipo de dato que va a retornar la consulta
+        schema:
+          type: number
+          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
+          example: 1
+        
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: object
+                #especificamos la info del array
+                example: {"message": "product has been deleted"}
+                
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"err": "impossible to delete product"}
+                
+                
+   #admin and superAdmin updating products
+  /deliah/admin/editfullproduct/{id}:
+    put:
+      description: this request allows admins and super admin to edit products
+      requestBody:
+        required: true
+        content: 
+          aplication/json: 
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                product_name: 
+                  type: string
+                price_per_unit:
+                  type: integer
+      
+      parameters: 
+        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
+      - in: path
+        # nombre del parametro 
+        name: id
+        required: true
+        description: user id
+        #tipo de dato que va a retornar la consulta
+        schema:
+          type: number
+          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
+          example: 1
+        
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: object
+                #especificamos la info del array
+                example: {"message": "product has been edited correctly"}
+                
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"err": "impossible to update product"}        
+                
+                
+  #admin and superAdmin getting users by rol, rol can be allusers, user, or admin
+  /deliah/admin/users/{rol}:
+    get:
+      description: this request allows to get users by rol
+      parameters: 
+        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
+      - in: path
+        # nombre del parametro 
+        name: rol
+        required: true
+        description: user rol
+        #tipo de dato que va a retornar la consulta
+        schema:
+          type: string
+          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
+          example: allusers
+        
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: array
+                #especificamos la info del array
+                items:
+                  properties:
+                    user_id:
+                      type: integer
+                      example: 1
+                    nickname:
+                      type: string
+                      example: john123
+                    name_and_lastname: 
+                      type: string
+                      example: jhon fredy pérez
+                    email:
+                      type: string
+                      example: john@john.com
+                    phone_number:
+                    #si queremos colocar decimale el tipo seria number
+                    #y colocamos format: float
+                      type: integer
+                      example: 123456789
+                    direction:
+                      type: string
+                      example: carrera 7 # 24-75
+        400:
+          description: not possible to get required user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"error": "user not found"}
+                
+  
+  #user rol getting their own information
+  /deliah/user/info/{id}:
+    get:
+      description: this request allows to get users by id if user has user as rol only
+      parameters: 
+        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
+      - in: path
+        # nombre del parametro 
+        name: id
+        required: true
+        description: user id
+        #tipo de dato que va a retornar la consulta
+        schema:
+          type: integer
+          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
+          example: 1
+        
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: array
+                #especificamos la info del array
+                items:
+                  properties:
+                    user_id:
+                      type: integer
+                      example: 2
+                    nickname:
+                      type: string
+                      example: maria123
+                    name_and_lastname: 
+                      type: string
+                      example: maria osorio
+                    email:
+                      type: string
+                      example: maria@maria.com
+                    phone_number:
+                    #si queremos colocar decimale el tipo seria number
+                    #y colocamos format: float
+                      type: integer
+                      example: 123456789
+                    direction:
+                      type: string
+                      example: carrera 7 # 24-75
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"error": "user not found"}
+                
+                
+                
+  #users making orders
+  /deliah/user/neworder:
+     post:
+      description: user making orders
+      requestBody:
+        required: true
+        content: 
+          aplication/json: 
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                id_order: 
+                  type: integer
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer  
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"message": "new products successfully created"}
+        400:
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {"err": "impossible to create new product"} 
+                
+                
+  #admin and superAdmin getting all orders
+  /deliah/admin/orders:
+    get:
+      description: this request allows admins and superAdmin all orders
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: array
+                #especificamos la info del array
+                items:
+                  properties:
+                    status:
+                      type: string
+                      example: preparando
+                    hour:
+                      type: string
+                      example: 2020-07-09 01:04:17
+                    id_order: 
+                      type: integer
+                      example: 1
+                    quantity:
+                      type: integer
+                      example: 3
+                    product_name:
+                    #si queremos colocar decimale el tipo seria number
+                    #y colocamos format: float
+                      type: string
+                      example: empanadas
+                    price_per_unit:
+                      type: integer
+                      example: 2650
+                    nickname:
+                      type: string
+                      example: john 123
+                    direction:
+                      type: string
+                      example: cra76425
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"error": "impossible to get orders"}
+                
+                
+                
+  #admin and superAdmin changing order status by id
+  /deliah/admin/ordersstatus/{id}:
+    put:
+      description: this request allows admins and super admin update order status
+      requestBody:
+        required: true
+        content: 
+          aplication/json: 
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      parameters: 
+        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
+      - in: path
+        # nombre del parametro 
+        name: id
+        required: true
+        description: user id
+        #tipo de dato que va a retornar la consulta
+        schema:
+          type: number
+          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
+          example: 1
+        
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: object
+                #especificamos la info del array
+                example: {"message": "product has been edited correctly"}
+                
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"err": "impossible to update product"}   
+                
+  
+  #admin and super admin deleting orders by id
+  /deliah/admin/orders/deleteorder/{id}:
+    delete:
+      description: this request allows admins and super admin delete orders by id
+      parameters: 
+        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
+      - in: path
+        # nombre del parametro 
+        name: id
+        required: true
+        description: user id
+        #tipo de dato que va a retornar la consulta
+        schema:
+          type: number
+          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
+          example: 2
+        
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: object
+                #especificamos la info del array
+                example: {"message": "order has been deleted"}
+                
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"err": "impossible to delete order"}
+                
+                
+                
+  #admin and superAdmin changing order status by id
+  /deliah/user/orderstatus{id}:
+    put:
+      description: this request allows admins and super admin update order status
+      requestBody:
+        required: true
+        content: 
+          aplication/json: 
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      parameters: 
+        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
+      - in: path
+        # nombre del parametro 
+        name: id
+        required: true
+        description: user id
+        #tipo de dato que va a retornar la consulta
+        schema:
+          type: number
+          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
+          example: 1
+        
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: object
+                #especificamos la info del array
+                example: {"message": "this order has been cancelled"}
+                
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"err": "impossible update order status, or this order has been already canceled"}   
+                
+                
+  #user with rol user getting their own orders
+  /deliah/user/getorders:
+    get:
+      description: this request allows users with roll user their own orders
+      responses:
+      #codigo de respuesta si la consulta es exitosa
+        200:
+          description: Successful request
+          #que contenido nos va a enviar la consulta
+          content: 
+          #queremos la respuesta en json
+            application/json:
+            #declaramos el squema que queremos recibir
+              schema: 
+              #esperamos info de tipo array
+                type: array
+                #especificamos la info del array
+                items:
+                  properties:
+                    status:
+                      type: string
+                      example: preparando
+                    hour:
+                      type: string
+                      example: 2020-07-09 01:04:17
+                    id_order: 
+                      type: integer
+                      example: 1
+                    quantity:
+                      type: integer
+                      example: 3
+                    product_name:
+                    #si queremos colocar decimale el tipo seria number
+                    #y colocamos format: float
+                      type: string
+                      example: empanadas
+                    price_per_unit:
+                      type: integer
+                      example: 2650
+                    nickname:
+                      type: string
+                      example: john 123
+                    direction:
+                      type: string
+                      example: cra76425
+        400:
+          description: provided id doesn't match with any user
+          content:
+            application/json:
+              schema: 
+                type: object
+                example: {"error": "impossible to get orders"}
