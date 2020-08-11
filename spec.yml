@@ -146,31 +146,21 @@ paths:
     delete:
       description: this request allows super admin delete admins by id
       parameters: 
-        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
       - in: path
-        # nombre del parametro 
         name: id
         required: true
         description: user id
-        #tipo de dato que va a retornar la consulta
         schema:
           type: number
-          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
           example: 1
         
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: object
-                #especificamos la info del array
                 example: {"message": "admmin successfully deleted"}
                 
         400:
@@ -222,31 +212,21 @@ paths:
     delete:
       description: this request allows admins and super admin delete products by id
       parameters: 
-        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
       - in: path
-        # nombre del parametro 
         name: id
         required: true
         description: user id
-        #tipo de dato que va a retornar la consulta
         schema:
           type: number
-          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
           example: 1
         
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: object
-                #especificamos la info del array
                 example: {"message": "product has been deleted"}
                 
         400:
@@ -277,31 +257,21 @@ paths:
                   type: integer
       
       parameters: 
-        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
       - in: path
-        # nombre del parametro 
         name: id
         required: true
         description: user id
-        #tipo de dato que va a retornar la consulta
         schema:
           type: number
-          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
           example: 1
         
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: object
-                #especificamos la info del array
                 example: {"message": "product has been edited correctly"}
                 
         400:
@@ -318,31 +288,21 @@ paths:
     get:
       description: this request allows to get users by rol
       parameters: 
-        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
       - in: path
-        # nombre del parametro 
         name: rol
         required: true
         description: user rol
-        #tipo de dato que va a retornar la consulta
         schema:
           type: string
-          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
           example: allusers
         
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: array
-                #especificamos la info del array
                 items:
                   properties:
                     user_id:
@@ -358,8 +318,6 @@ paths:
                       type: string
                       example: john@john.com
                     phone_number:
-                    #si queremos colocar decimale el tipo seria number
-                    #y colocamos format: float
                       type: integer
                       example: 123456789
                     direction:
@@ -379,31 +337,21 @@ paths:
     get:
       description: this request allows to get users by id if user has user as rol only
       parameters: 
-        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
       - in: path
-        # nombre del parametro 
         name: id
         required: true
         description: user id
-        #tipo de dato que va a retornar la consulta
         schema:
           type: integer
-          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
           example: 1
         
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: array
-                #especificamos la info del array
                 items:
                   properties:
                     user_id:
@@ -419,8 +367,6 @@ paths:
                       type: string
                       example: maria@maria.com
                     phone_number:
-                    #si queremos colocar decimale el tipo seria number
-                    #y colocamos format: float
                       type: integer
                       example: 123456789
                     direction:
@@ -477,18 +423,12 @@ paths:
     get:
       description: this request allows admins and superAdmin all orders
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: array
-                #especificamos la info del array
                 items:
                   properties:
                     status:
@@ -504,8 +444,6 @@ paths:
                       type: integer
                       example: 3
                     product_name:
-                    #si queremos colocar decimale el tipo seria number
-                    #y colocamos format: float
                       type: string
                       example: empanadas
                     price_per_unit:
@@ -541,31 +479,21 @@ paths:
                 status:
                   type: string
       parameters: 
-        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
       - in: path
-        # nombre del parametro 
         name: id
         required: true
         description: user id
-        #tipo de dato que va a retornar la consulta
         schema:
           type: number
-          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
           example: 1
         
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: object
-                #especificamos la info del array
                 example: {"message": "product has been edited correctly"}
                 
         400:
@@ -582,31 +510,21 @@ paths:
     delete:
       description: this request allows admins and super admin delete orders by id
       parameters: 
-        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
       - in: path
-        # nombre del parametro 
         name: id
         required: true
         description: user id
-        #tipo de dato que va a retornar la consulta
         schema:
           type: number
-          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
           example: 2
         
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: object
-                #especificamos la info del array
                 example: {"message": "order has been deleted"}
                 
         400:
@@ -633,31 +551,21 @@ paths:
                 status:
                   type: string
       parameters: 
-        #Colocamos el tipo de parametro como vamos a realizar una consulta tipo get el parametro que va en la url es un query
       - in: path
-        # nombre del parametro 
         name: id
         required: true
         description: user id
-        #tipo de dato que va a retornar la consulta
         schema:
           type: number
-          #colocamos un ejemplo del parametro, es decir una valor para el parametro id que creamos
           example: 1
         
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: object
-                #especificamos la info del array
                 example: {"message": "this order has been cancelled"}
                 
         400:
@@ -674,18 +582,12 @@ paths:
     get:
       description: this request allows users with roll user their own orders
       responses:
-      #codigo de respuesta si la consulta es exitosa
         200:
           description: Successful request
-          #que contenido nos va a enviar la consulta
           content: 
-          #queremos la respuesta en json
             application/json:
-            #declaramos el squema que queremos recibir
               schema: 
-              #esperamos info de tipo array
                 type: array
-                #especificamos la info del array
                 items:
                   properties:
                     status:
@@ -701,8 +603,6 @@ paths:
                       type: integer
                       example: 3
                     product_name:
-                    #si queremos colocar decimale el tipo seria number
-                    #y colocamos format: float
                       type: string
                       example: empanadas
                     price_per_unit:
