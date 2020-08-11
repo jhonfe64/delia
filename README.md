@@ -6,4 +6,7 @@ La presenta aplicación de pedidos permite registrar usuarios, crear ordenes, ed
 
 - Clone el repositorio https://github.com/jhonfe64/delia.git
 - Use npm i para instalar todas las dependecias 
+- Importe la base de datos delilah_resto.sql
+- Importe en postman la colección deliah_resto.postman_collection.json para reaalizar las pruebas
+
 
