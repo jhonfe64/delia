@@ -1,6 +1,6 @@
 # delia_resto
 
-La presenta aplicación de pedidos permite registrar usuarios, crear ordenes, editarlas y cancelarlas, permite registrar administradores, editarlos y eliminarlos por parte de un superadmin, asi como crear, editar y eliminar productos por parte de usuarios con rol admin y superadmin.
+This api rest for deliveries allows sign up new users, create orders, edit orders, and cancel them, also allows to sign up admins, edit and delete them, by a super admin, also user with rol admin and super admin can create, edit, and delete products.
 
 ### Para clonar el proyecto y correrlo de manera local por favor siga las instrucciones.
 
