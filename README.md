@@ -7,8 +7,13 @@ This api rest for deliveries allows sign up new users, create orders, edit order
 
 1. nodejs
 2. express.js
-3. mysql
+
+### Includes the following node packages
+
+3. sequelize
+3. mysql2
 4. json web token
+5. bcrypt
 
 ### To clone the repository and run it please follow this instructions
 
