@@ -2,7 +2,7 @@
 
 This api rest for deliveries allows sign up new users, create orders, edit orders, and cancel them, also allows to sign up admins, edit and delete them, by a super admin, users with rol admin and super admin can create, edit, and delete products.
 
-### Para clonar el proyecto y correrlo de manera local por favor siga las instrucciones.
+### To clone the repository and run it please follow this instructions
 
 - Clone el repositorio https://github.com/jhonfe64/delia.git
 - Use npm i para instalar todas las dependecias 
