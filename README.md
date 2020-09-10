@@ -17,9 +17,9 @@ This api rest for deliveries allows sign up new users, create orders, edit order
 
 ### To clone the repository and run it please follow this instructions
 
-- Clone el repositorio https://github.com/jhonfe64/delia.git
-- Use npm i para instalar todas las dependecias 
-- Importe la base de datos delilah_resto.sql
-- Importe en postman la colección deliah_resto.postman_collection.json para reaalizar las pruebas
+- Clone the repository https://github.com/jhonfe64/delia.git
+- Use npm i to install all dependences 
+- Import the data base delilah_resto.sql
+- Import the postman collection deliah_resto.postman_collection.json
 
 
