@@ -5,8 +5,9 @@ This api rest for deliveries allows sign up new users, create orders, edit order
 
 ### This project use the followig tecnologies
 
-1. nodejs
-2. express.js
+1. Nodejs
+2. Express.js
+3. Mysql
 
 ### Includes the following node packages
 
@@ -21,6 +22,7 @@ This api rest for deliveries allows sign up new users, create orders, edit order
 
 - git clone https://github.com/jhonfe64/delia.git
 - npm i (to install all dependences) 
+- nodemon index (to run the project)
 
 
 - Import the data base delilah_resto.sql
